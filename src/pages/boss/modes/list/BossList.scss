@@ -2,6 +2,12 @@
   height: 100%;
   overflow: hidden;
 
+  &.filter_visible {
+    & > .list {
+      height: calc(100% - 152px);
+    }
+  }
+
   h2 {
     margin: 0 0 20px 0;
 

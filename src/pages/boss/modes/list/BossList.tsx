@@ -27,7 +27,7 @@ function BossList() {
   }, [searchTerm]);
 
   return (
-    <div className="boss_list">
+    <div className={`boss_list ${isFilterVisible ? "filter_visible" : ""}`}>
       <h2>All 48 Hollow Knight Silksong bosses, in order</h2>
 
       <div className="toolbar">
