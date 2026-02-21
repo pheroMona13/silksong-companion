@@ -1,11 +1,7 @@
 import BossList from "./modes/list/BossList";
 
 function BossPage() {
-  return (
-    <div className="page">
-      <BossList />
-    </div>
-  );
+  return <BossList />;
 }
 
 export default BossPage;
