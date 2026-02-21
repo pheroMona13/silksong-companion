@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
   },
-  base: '/silksong-companion/',
+  base: "/silksong-companion/",
   plugins: [
     react(),
     VitePWA({
@@ -20,10 +20,11 @@ export default defineConfig({
       },
 
       manifest: {
-        name: "virel-silksong",
-        short_name: "Silksong Companion",
+        name: "Silksong Companion",
+        short_name: "SilkComp",
         description: "Companion app for the game, Hollow Knight: Silksong",
         theme_color: "#242424",
+        start_url: "/silksong-companion/",
       },
 
       workbox: {
