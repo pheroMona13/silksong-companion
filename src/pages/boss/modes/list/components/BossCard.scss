@@ -1,0 +1,99 @@
+.boss_card_wrapper {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  &.selectable {
+    flex-direction: row;
+  }
+
+  &.selected {
+    .boss_card {
+      background-color: rgba(102, 212, 146, 0.1);
+    }
+  }
+
+  .checkbox {
+    padding: 15px 10px 10px 0;
+  }
+
+  .boss_card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding: 10px;
+
+    border: 1px solid var(--color_border);
+    border-radius: 10px;
+
+    & > .head {
+      display: flex;
+
+      .title {
+        flex: 1;
+
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .meta {
+        opacity: 0.8;
+
+        font-size: 12px;
+      }
+    }
+
+    & > .description {
+      p {
+        font-size: 14px;
+
+        &:not(:last-child) {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+  /* Expand animation */
+  & > .expandable {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+
+    .expandable_inner {
+      display: flex;
+      gap: 10px;
+
+      overflow: hidden;
+      padding: 0 10px;
+
+      .action {
+        flex: 1;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        padding: 10px 0;
+        border: 1px solid var(--color_border);
+        border-radius: 5px;
+        overflow: hidden;
+
+        font-size: 10px;
+      }
+    }
+  }
+
+  &.open {
+    .expandable {
+      grid-template-rows: 1fr;
+    }
+
+    .expandable_inner {
+      padding: 10px;
+    }
+  }
+}

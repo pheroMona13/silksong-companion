@@ -1,0 +1,36 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: min(600px, 100vw);
+  height: 100dvh;
+  margin: 0 auto;
+
+  & > header {
+    display: flex;
+    justify-content: space-between;
+
+    height: 80px;
+    padding: 20px;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+
+    & > .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  & > section.body {
+    flex: 1;
+
+    height: calc(100dvh - 80px);
+    overflow: auto;
+    padding: 20px;
+  }
+}
