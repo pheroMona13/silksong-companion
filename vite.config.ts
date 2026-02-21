@@ -24,6 +24,7 @@ export default defineConfig({
         short_name: "SilkComp",
         description: "Companion app for the game, Hollow Knight: Silksong",
         theme_color: "#242424",
+        background_color: "#242424",
         start_url: "/silksong-companion/",
       },
 
