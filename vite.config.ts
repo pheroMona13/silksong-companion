@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
   },
-  base: "/silksong-companion/",
+  base: "/silksong-companion",
   plugins: [
     react(),
     VitePWA({

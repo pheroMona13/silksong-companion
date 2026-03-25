@@ -1,36 +1,32 @@
-import type { ReactNode } from "react";
-import AvatarPNG from "../assets/images/avatar.png";
-import IconMenu from "../assets/images/icons/menu.svg";
-import "./Layout.scss";
+import { Outlet } from 'react-router';
+import AvatarPNG from '../assets/images/avatar.png';
+import IconMenu from '../assets/images/icons/menu.svg';
+import './Layout.scss';
 
-export type LayoutProps = {
-  children: ReactNode;
-};
-
-function Layout({ children }: LayoutProps) {
+function Layout() {
   const greet = () => {
     const phrases = {
       morning: [
-        "Good Morning", //
-        "Morning!",
-        "Rise & Shine",
-        "Bright Morning",
+        'Good Morning', //
+        'Morning!',
+        'Rise & Shine',
+        'Bright Morning',
       ],
       afternoon: [
-        "Good Afternoon", //
-        "Afternoon!",
-        "Hello There",
-        "Good Day",
+        'Good Afternoon', //
+        'Afternoon!',
+        'Hello There',
+        'Good Day',
       ],
       evening: [
-        "Good Evening", //
-        "Evening!",
+        'Good Evening', //
+        'Evening!',
       ],
       night: [
-        "Hello Night Owl", //
-        "Good Night",
-        "Night!",
-        "Quiet Night",
+        'Hello Night Owl', //
+        'Good Night',
+        'Night!',
+        'Quiet Night',
       ],
     };
 
@@ -38,13 +34,13 @@ function Layout({ children }: LayoutProps) {
     let timeOfDay: keyof typeof phrases;
 
     if (hour >= 5 && hour < 12) {
-      timeOfDay = "morning";
+      timeOfDay = 'morning';
     } else if (hour >= 12 && hour < 17) {
-      timeOfDay = "afternoon";
+      timeOfDay = 'afternoon';
     } else if (hour >= 17 && hour < 21) {
-      timeOfDay = "evening";
+      timeOfDay = 'evening';
     } else {
-      timeOfDay = "night";
+      timeOfDay = 'night';
     }
 
     const greetingsForTime = phrases[timeOfDay];
@@ -66,7 +62,9 @@ function Layout({ children }: LayoutProps) {
 
         <img src={IconMenu} alt="menu" className="menu_icon" />
       </header>
-      <section className="body">{children}</section>
+      <section className="body">
+        <Outlet />
+      </section>
     </div>
   );
 }

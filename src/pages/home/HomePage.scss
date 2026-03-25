@@ -1,0 +1,22 @@
+.HomePage {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & > .card {
+    color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 10px;
+
+    border: 1px solid var(--color_border);
+    border-radius: 10px;
+
+    opacity: 0.87;
+
+    text-decoration: none;
+  }
+}
