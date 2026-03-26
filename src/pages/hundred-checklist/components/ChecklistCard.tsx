@@ -16,22 +16,21 @@ function ChecklistCard({
   onToggle,
 }: ChecklistCardProps) {
   const handleActionClick = () => {
-    const searchPhrase = 'hollow knight silksong ' + item.name;
+    let searchPhrase = 'hollow knight silksong ';
 
-    // switch (action) {
-    //   case 'info':
-    //     searchPhrase += boss.name;
-    //     break;
+    switch (item.category) {
+      case 'mask shard':
+      case 'spool fragment':
+      case 'upgrade':
+      case 'progress and misc':
+        searchPhrase += `${item.name} ${item.location}`;
+        break;
 
-    //   case 'location':
-    //     searchPhrase += boss.name + ' where to find';
-    //     break;
+      default:
+        searchPhrase += item.name;
+    }
 
-    //   case 'defeat':
-    //     searchPhrase += boss.name + ' how to defeat';
-    //     break;
-    // }
-
+    return console.log(searchPhrase); // prevent help action till its parent calling bug get fixed
     window
       .open(
         'https://www.google.com/search?q=' + encodeURIComponent(searchPhrase),
