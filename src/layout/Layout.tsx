@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 import AvatarPNG from '../assets/images/avatar.png';
-import IconMenu from '../assets/images/icons/menu.svg';
+// import IconMenu from '../assets/images/icons/menu.svg';
 import './Layout.scss';
 
 function Layout() {
@@ -60,7 +60,7 @@ function Layout() {
           <p>{greet()} Pilgrim</p>
         </div>
 
-        <img src={IconMenu} alt="menu" className="menu_icon" />
+        {/* <img src={IconMenu} alt="menu" className="menu_icon" /> */}
       </header>
       <section className="body">
         <Outlet />
