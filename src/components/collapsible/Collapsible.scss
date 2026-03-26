@@ -21,8 +21,9 @@
 
     min-height: 40px;
     padding: 0 10px 0 0;
-
     border-bottom: 1px solid var(--color_border);
+
+    cursor: pointer;
 
     .title {
       flex: 1;
