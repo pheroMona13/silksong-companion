@@ -7,6 +7,8 @@
   height: 100dvh;
   margin: 0 auto;
 
+  position: relative;
+
   & > header {
     display: flex;
     justify-content: space-between;

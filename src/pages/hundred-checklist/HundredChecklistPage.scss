@@ -16,4 +16,22 @@
   .empty {
     opacity: 0.5;
   }
+
+  .applied-filter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    position: absolute;
+    top: 31px;
+    right: 20px;
+
+    opacity: 0.87;
+
+    font-size: 13px;
+
+    img {
+      width: 20px;
+    }
+  }
 }

@@ -15,13 +15,13 @@ export function useCheckedItems() {
     load();
   }, []);
 
-  async function toggleItem(bossId: string) {
+  async function toggleItem(id: string) {
     let updated: string[];
 
-    if (checkedItems.includes(bossId)) {
-      updated = checkedItems.filter((id) => id !== bossId);
+    if (checkedItems.includes(id)) {
+      updated = checkedItems.filter((item) => item !== id);
     } else {
-      updated = [...checkedItems, bossId];
+      updated = [...checkedItems, id];
     }
 
     setCheckedItems(updated);
