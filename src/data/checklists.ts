@@ -77,16 +77,17 @@ import SilkHeartPNG from '../assets/images/sprites/silk-heart.png';
 import EverbloomPNG from '../assets/images/sprites/everbloom.png';
 import BindEvaPNG from '../assets/images/sprites/bind-eva.png';
 
+export type ChecklistCategoryType =
+  | 'mask shard'
+  | 'spool fragment'
+  | 'tool'
+  | 'silk skill'
+  | 'ability'
+  | 'crest'
+  | 'upgrade'
+  | 'progress and misc';
 export type ChecklistType = {
-  category:
-    | 'mask shard'
-    | 'spool fragment'
-    | 'tool'
-    | 'silk skill'
-    | 'ability'
-    | 'crest'
-    | 'upgrade'
-    | 'progress and misc';
+  category: ChecklistCategoryType;
   name: string;
   location: string;
   where_to_find: string;
