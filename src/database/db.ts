@@ -1,12 +1,13 @@
 // src/lib/db.ts
 
-const DB_NAME = "virel-dilksong-db";
+const DB_NAME = 'silksong-companion-db';
 const DB_VERSION = 1;
-const STORE_NAME = "user";
+const STORE_NAME = 'user';
 
 export type UserData = {
   id: string;
   defeated_bosses: string[];
+  checked_items: string[];
 };
 
 function openDB(): Promise<IDBDatabase> {
@@ -17,7 +18,7 @@ function openDB(): Promise<IDBDatabase> {
       const db = request.result;
 
       if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: "id" });
+        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
       }
     };
 
@@ -30,10 +31,10 @@ export async function getUser(): Promise<UserData> {
   const db = await openDB();
 
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, "readonly");
+    const tx = db.transaction(STORE_NAME, 'readonly');
     const store = tx.objectStore(STORE_NAME);
 
-    const request = store.get("current");
+    const request = store.get('current');
 
     request.onsuccess = () => {
       if (request.result) {
@@ -41,11 +42,12 @@ export async function getUser(): Promise<UserData> {
       } else {
         // Create default user if not exists
         const defaultUser: UserData = {
-          id: "current",
+          id: 'current',
           defeated_bosses: [],
+          checked_items: [],
         };
 
-        const writeTx = db.transaction(STORE_NAME, "readwrite");
+        const writeTx = db.transaction(STORE_NAME, 'readwrite');
         writeTx.objectStore(STORE_NAME).put(defaultUser);
 
         resolve(defaultUser);
@@ -62,17 +64,76 @@ export async function updateDefeatedBosses(
   const db = await openDB();
 
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, "readwrite");
+    const tx = db.transaction(STORE_NAME, 'readwrite');
     const store = tx.objectStore(STORE_NAME);
 
-    const user: UserData = {
-      id: "current",
-      defeated_bosses,
+    const request = store.get('current');
+
+    request.onsuccess = () => {
+      let currentData: UserData;
+
+      if (request.result) {
+        currentData = request.result;
+      } else {
+        // Create default user if not exists
+        currentData = {
+          id: 'current',
+          defeated_bosses: [],
+          checked_items: [],
+        };
+      }
+
+      const user: UserData = {
+        ...currentData,
+        defeated_bosses,
+      };
+
+      const requestPut = store.put(user);
+
+      requestPut.onsuccess = () => resolve();
+      requestPut.onerror = () => reject(request.error);
     };
 
-    const request = store.put(user);
+    request.onerror = () => reject(request.error);
+  });
+}
 
-    request.onsuccess = () => resolve();
+export async function updateCheckedItems(
+  checked_items: string[],
+): Promise<void> {
+  const db = await openDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+
+    const request = store.get('current');
+
+    request.onsuccess = () => {
+      let currentData: UserData;
+
+      if (request.result) {
+        currentData = request.result;
+      } else {
+        // Create default user if not exists
+        currentData = {
+          id: 'current',
+          defeated_bosses: [],
+          checked_items: [],
+        };
+      }
+
+      const user: UserData = {
+        ...currentData,
+        checked_items,
+      };
+
+      const requestPut = store.put(user);
+
+      requestPut.onsuccess = () => resolve();
+      requestPut.onerror = () => reject(request.error);
+    };
+
     request.onerror = () => reject(request.error);
   });
 }

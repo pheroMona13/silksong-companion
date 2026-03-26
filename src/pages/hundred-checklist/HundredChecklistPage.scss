@@ -1,0 +1,19 @@
+.HundredChecklistPage {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  .toolbar {
+    label {
+      & > div {
+        margin-bottom: 10px;
+
+        font-size: 13px;
+      }
+    }
+  }
+
+  .empty {
+    opacity: 0.5;
+  }
+}
