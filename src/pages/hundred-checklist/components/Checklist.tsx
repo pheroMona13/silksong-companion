@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import Collapsible from '../../../components/collapsible/Collapsible';
 import {
-  checklists,
   type ChecklistCategoryType,
   type ChecklistType,
 } from '../../../data/checklists';
@@ -21,20 +20,15 @@ function Checklist({ title, category, filteredList }: ChecklistProps) {
       return e.category === category;
     });
   }, [filteredList, category]);
-  const totalItemsInCategory = useMemo(() => {
-    return checklists.filter((e) => {
-      return e.category === category;
-    });
-  }, [category]);
   const totalCheckedCount = useMemo(() => {
-    return totalItemsInCategory.filter((e) => {
+    return displayList.filter((e) => {
       return checkedItems.includes(e.id);
     }).length;
-  }, [checkedItems, totalItemsInCategory]);
+  }, [checkedItems, displayList]);
 
   return (
     <Collapsible
-      title={`[${totalCheckedCount}/${totalItemsInCategory.length}] ${title}`}
+      title={`[${totalCheckedCount}/${displayList.length}] ${title}`}
     >
       {!displayList.length ? (
         <p className="empty">There are no {title} in this filtered location.</p>
