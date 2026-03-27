@@ -1,0 +1,47 @@
+.HundredChecklistPage {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  & > .list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding: 0 0 20px;
+    height: calc(100% - 125px);
+    overflow: auto;
+  }
+
+  .toolbar {
+    label {
+      & > div {
+        margin-bottom: 10px;
+
+        font-size: 13px;
+      }
+    }
+  }
+
+  .empty {
+    opacity: 0.5;
+  }
+
+  .checked-count {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    position: absolute;
+    top: 31px;
+    right: 20px;
+
+    opacity: 0.87;
+
+    font-size: 13px;
+
+    img {
+      width: 20px;
+    }
+  }
+}

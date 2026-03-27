@@ -8,6 +8,7 @@ export type UserData = {
   id: string;
   defeated_bosses: string[];
   checked_items: string[];
+  found_fleas: string[];
 };
 
 function openDB(): Promise<IDBDatabase> {
@@ -45,6 +46,7 @@ export async function getUser(): Promise<UserData> {
           id: 'current',
           defeated_bosses: [],
           checked_items: [],
+          found_fleas: [],
         };
 
         const writeTx = db.transaction(STORE_NAME, 'readwrite');
@@ -80,6 +82,7 @@ export async function updateDefeatedBosses(
           id: 'current',
           defeated_bosses: [],
           checked_items: [],
+          found_fleas: [],
         };
       }
 
@@ -120,12 +123,52 @@ export async function updateCheckedItems(
           id: 'current',
           defeated_bosses: [],
           checked_items: [],
+          found_fleas: [],
         };
       }
 
       const user: UserData = {
         ...currentData,
         checked_items,
+      };
+
+      const requestPut = store.put(user);
+
+      requestPut.onsuccess = () => resolve();
+      requestPut.onerror = () => reject(request.error);
+    };
+
+    request.onerror = () => reject(request.error);
+  });
+}
+
+export async function updateFoundFleas(found_fleas: string[]): Promise<void> {
+  const db = await openDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+
+    const request = store.get('current');
+
+    request.onsuccess = () => {
+      let currentData: UserData;
+
+      if (request.result) {
+        currentData = request.result;
+      } else {
+        // Create default user if not exists
+        currentData = {
+          id: 'current',
+          defeated_bosses: [],
+          checked_items: [],
+          found_fleas: [],
+        };
+      }
+
+      const user: UserData = {
+        ...currentData,
+        found_fleas,
       };
 
       const requestPut = store.put(user);

@@ -1,17 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import tools from '../../utils/tools';
-import { checklists } from '../../data/checklists';
-import Checklist from './components/Checklist';
+import FleaCard from './Components/FleaCard';
+import { fleas } from '../../data/fleas';
+import { useFoundFleas } from '../../hooks/useFoundFleas';
 import PermDataSettingSVG from '../../assets/images/icons/perm_data_setting.svg';
-import './HundredChecklistPage.scss';
+import CheckBoxSVG from '../../assets/images/icons/check_box.svg';
+import './FleaPage.scss';
 
-function HundredChecklistPage() {
+function FleaPage() {
+  const { foundFleas, toggleFlea } = useFoundFleas();
+
   const [locations, setLocations] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string>('All');
 
   // generate filtered items
   const filteredList = useMemo(() => {
-    return checklists.filter((e) => {
+    return fleas.filter((e) => {
       return selectedLocation === 'All' || e.location === selectedLocation;
     });
   }, [selectedLocation]);
@@ -21,7 +25,7 @@ function HundredChecklistPage() {
     setLocations([
       'All',
       ...tools
-        .groupBy({ input: checklists, keys: ['location'] })
+        .groupBy({ input: fleas, keys: ['location'] })
         .map((e) => {
           return e.location;
         })
@@ -39,12 +43,19 @@ function HundredChecklistPage() {
 
   return (
     <div className="HundredChecklistPage">
-      {selectedLocation !== 'All' ? (
-        <div className="applied-filter">
-          {selectedLocation}
-          <img src={PermDataSettingSVG} alt="applied filter" />
-        </div>
-      ) : null}
+      <div className="checked-count">
+        {selectedLocation !== 'All' ? (
+          <>
+            {selectedLocation}
+            <img src={PermDataSettingSVG} alt="applied filter" />
+          </>
+        ) : (
+          <>
+            [{foundFleas.length}/{fleas.length}]
+            <img src={CheckBoxSVG} alt="checked count" />
+          </>
+        )}
+      </div>
 
       <div className="toolbar">
         <label>
@@ -67,40 +78,25 @@ function HundredChecklistPage() {
         </label>
       </div>
 
-      <Checklist
-        title="Mask Shards"
-        category="mask shard"
-        filteredList={filteredList}
-      />
-      <Checklist
-        title="Spool Fragments"
-        category="spool fragment"
-        filteredList={filteredList}
-      />
-      <Checklist title="Tools" category="tool" filteredList={filteredList} />
-      <Checklist
-        title="Silk Skills"
-        category="silk skill"
-        filteredList={filteredList}
-      />
-      <Checklist
-        title="Abilities"
-        category="ability"
-        filteredList={filteredList}
-      />
-      <Checklist title="Crests" category="crest" filteredList={filteredList} />
-      <Checklist
-        title="Needle and Tool Upgrades"
-        category="upgrade"
-        filteredList={filteredList}
-      />
-      <Checklist
-        title="Progress and Misc."
-        category="progress and misc"
-        filteredList={filteredList}
-      />
+      <div className="list">
+        {filteredList.map((flea) => (
+          <FleaCard
+            key={flea.id}
+            flea={flea}
+            isSelected={foundFleas.includes(flea.id)}
+            onToggle={toggleFlea}
+            selectable
+          />
+        ))}
+
+        {filteredList.length === 0 && (
+          <div className="no_results">
+            There are no fleas in this filtered location.
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
-export default HundredChecklistPage;
+export default FleaPage;

@@ -4,6 +4,7 @@ import BossPage from './pages/boss/BossPage.tsx';
 import PWABadge from './PWABadge.tsx';
 import HomePage from './pages/home/HomePage.tsx';
 import HundredChecklistPage from './pages/hundred-checklist/HundredChecklistPage.tsx';
+import FleaPage from './pages/flea/FleaPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: '/silksong-companion/100-checklist',
         Component: HundredChecklistPage,
+      },
+      {
+        path: '/silksong-companion/fleas',
+        Component: FleaPage,
       },
     ],
   },
