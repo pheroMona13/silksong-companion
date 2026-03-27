@@ -13,6 +13,9 @@ function HomePage() {
       <Link to="/silksong-companion/fleas" className="card">
         List of Fleas
       </Link>
+      <Link to="/silksong-companion/collectibles" className="card">
+        List of Collectibles
+      </Link>
     </div>
   );
 }

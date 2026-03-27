@@ -8,7 +8,7 @@ export function useDefeatedBosses() {
   useEffect(() => {
     async function load() {
       const user = await getUser();
-      setDefeatedBosses(user.defeated_bosses);
+      setDefeatedBosses(user.defeated_bosses ?? []);
       setLoading(false);
     }
 

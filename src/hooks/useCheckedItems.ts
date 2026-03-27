@@ -8,7 +8,7 @@ export function useCheckedItems() {
   useEffect(() => {
     async function load() {
       const user = await getUser();
-      setCheckedItems(user.checked_items);
+      setCheckedItems(user.checked_items ?? []);
       setLoading(false);
     }
 

@@ -5,6 +5,7 @@ import PWABadge from './PWABadge.tsx';
 import HomePage from './pages/home/HomePage.tsx';
 import HundredChecklistPage from './pages/hundred-checklist/HundredChecklistPage.tsx';
 import FleaPage from './pages/flea/FleaPage.tsx';
+import CollectiblesPage from './pages/collectible/CollectiblesPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: '/silksong-companion/fleas',
         Component: FleaPage,
+      },
+      {
+        path: '/silksong-companion/collectibles',
+        Component: CollectiblesPage,
       },
     ],
   },

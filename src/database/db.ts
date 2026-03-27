@@ -9,6 +9,7 @@ export type UserData = {
   defeated_bosses: string[];
   checked_items: string[];
   found_fleas: string[];
+  found_collectibles: string[];
 };
 
 function openDB(): Promise<IDBDatabase> {
@@ -47,6 +48,7 @@ export async function getUser(): Promise<UserData> {
           defeated_bosses: [],
           checked_items: [],
           found_fleas: [],
+          found_collectibles: [],
         };
 
         const writeTx = db.transaction(STORE_NAME, 'readwrite');
@@ -83,6 +85,7 @@ export async function updateDefeatedBosses(
           defeated_bosses: [],
           checked_items: [],
           found_fleas: [],
+          found_collectibles: [],
         };
       }
 
@@ -124,6 +127,7 @@ export async function updateCheckedItems(
           defeated_bosses: [],
           checked_items: [],
           found_fleas: [],
+          found_collectibles: [],
         };
       }
 
@@ -163,12 +167,55 @@ export async function updateFoundFleas(found_fleas: string[]): Promise<void> {
           defeated_bosses: [],
           checked_items: [],
           found_fleas: [],
+          found_collectibles: [],
         };
       }
 
       const user: UserData = {
         ...currentData,
         found_fleas,
+      };
+
+      const requestPut = store.put(user);
+
+      requestPut.onsuccess = () => resolve();
+      requestPut.onerror = () => reject(request.error);
+    };
+
+    request.onerror = () => reject(request.error);
+  });
+}
+
+export async function updateFoundCollectibles(
+  found_collectibles: string[],
+): Promise<void> {
+  const db = await openDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+
+    const request = store.get('current');
+
+    request.onsuccess = () => {
+      let currentData: UserData;
+
+      if (request.result) {
+        currentData = request.result;
+      } else {
+        // Create default user if not exists
+        currentData = {
+          id: 'current',
+          defeated_bosses: [],
+          checked_items: [],
+          found_fleas: [],
+          found_collectibles: [],
+        };
+      }
+
+      const user: UserData = {
+        ...currentData,
+        found_collectibles,
       };
 
       const requestPut = store.put(user);
