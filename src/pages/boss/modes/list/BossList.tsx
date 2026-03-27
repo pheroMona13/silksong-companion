@@ -1,17 +1,18 @@
-import { useMemo, useState } from "react";
-import { bosses } from "../../../../data/bosses";
-import BossCard from "./components/BossCard";
-import Button from "../../../../components/button/Button";
-import { useDefeatedBosses } from "../../../../hooks/useDefeatedBosses";
-import "./BossList.scss";
+import { useMemo, useState } from 'react';
+import { bosses } from '../../../../data/bosses';
+import BossCard from './components/BossCard';
+import Button from '../../../../components/button/Button';
+import { useDefeatedBosses } from '../../../../hooks/useDefeatedBosses';
+import CheckBoxSVG from '../../../../assets/images/icons/check_box.svg';
+import './BossList.scss';
 
 function BossList() {
   const { defeatedBosses, toggleBoss } = useDefeatedBosses();
 
-  const [isSelectable, setIsSelectable] = useState(false);
+  const [isSelectable, setIsSelectable] = useState(true);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const toggleStatus = () => {
     setIsSelectable((prev) => !prev);
@@ -27,13 +28,22 @@ function BossList() {
   }, [searchTerm]);
 
   return (
-    <div className={`boss_list ${isFilterVisible ? "filter_visible" : ""}`}>
+    <div className={`boss_list ${isFilterVisible ? 'filter_visible' : ''}`}>
+      {defeatedBosses.length ? (
+        <div className="checked-count">
+          [{defeatedBosses.length}/{bosses.length}]
+          <img src={CheckBoxSVG} alt="applied filter" />
+        </div>
+      ) : null}
+
       <h2>All 48 Hollow Knight Silksong bosses, in order</h2>
 
       <div className="toolbar">
-        <Button onClick={toggleStatus}>status</Button>
+        <Button onClick={toggleStatus}>
+          {isSelectable ? 'see info' : 'check defeated'}
+        </Button>
         <Button onClick={toggleFilter}>
-          {!isFilterVisible && searchTerm ? "filters *" : "filters"}
+          {!isFilterVisible && searchTerm ? 'filters *' : 'filters'}
         </Button>
       </div>
 

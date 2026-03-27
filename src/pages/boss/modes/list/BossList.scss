@@ -8,6 +8,16 @@
     }
   }
 
+  & > .list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding: 0 0 20px;
+    height: calc(100% - 125px);
+    overflow: auto;
+  }
+
   h2 {
     margin: 0 0 20px 0;
 
@@ -25,13 +35,21 @@
     margin-bottom: 20px;
   }
 
-  & > .list {
+  .checked-count {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    gap: 5px;
 
-    padding: 0 0 20px;
-    height: calc(100% - 125px);
-    overflow: auto;
+    position: absolute;
+    top: 31px;
+    right: 20px;
+
+    opacity: 0.87;
+
+    font-size: 13px;
+
+    img {
+      width: 20px;
+    }
   }
 }
