@@ -1,21 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
 import tools from '../../utils/tools';
-import FleaCard from './Components/FleaCard';
 import { fleas } from '../../data/fleas';
-import { useFoundFleas } from '../../hooks/useFoundFleas';
+import { useFoundMemoryLockets } from '../../hooks/useFoundMemoryLockets';
+import { memoryLockets } from '../../data/memoryLockets';
+import MemoryLocketCard from './components/MemoryLocketCard';
 import PermDataSettingSVG from '../../assets/images/icons/perm_data_setting.svg';
 import CheckBoxSVG from '../../assets/images/icons/check_box.svg';
-import './FleaPage.scss';
+import './MemoryLocketPage.scss';
 
-function FleaPage() {
-  const { foundFleas, toggleFlea } = useFoundFleas();
+function MemoryLocketPage() {
+  const { foundMemoryLockets, toggleMemoryLocket } = useFoundMemoryLockets();
 
   const [locations, setLocations] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string>('All');
 
   // generate filtered items
   const filteredList = useMemo(() => {
-    return fleas.filter((e) => {
+    return memoryLockets.filter((e) => {
       return selectedLocation === 'All' || e.location === selectedLocation;
     });
   }, [selectedLocation]);
@@ -42,7 +43,7 @@ function FleaPage() {
   }, []);
 
   return (
-    <div className="FleaPage">
+    <div className="MemoryLocketPage">
       <div className="checked-count">
         {selectedLocation !== 'All' ? (
           <>
@@ -51,7 +52,7 @@ function FleaPage() {
           </>
         ) : (
           <>
-            [{foundFleas.length}/{fleas.length}]
+            [{foundMemoryLockets.length}/{fleas.length}]
             <img src={CheckBoxSVG} alt="checked count" />
           </>
         )}
@@ -79,12 +80,12 @@ function FleaPage() {
       </div>
 
       <div className="list">
-        {filteredList.map((flea) => (
-          <FleaCard
-            key={flea.id}
-            flea={flea}
-            isSelected={foundFleas.includes(flea.id)}
-            onToggle={toggleFlea}
+        {filteredList.map((memoryLocket) => (
+          <MemoryLocketCard
+            key={memoryLocket.id}
+            memoryLocket={memoryLocket}
+            isSelected={foundMemoryLockets.includes(memoryLocket.id)}
+            onToggle={toggleMemoryLocket}
             selectable
           />
         ))}
@@ -99,4 +100,4 @@ function FleaPage() {
   );
 }
 
-export default FleaPage;
+export default MemoryLocketPage;
