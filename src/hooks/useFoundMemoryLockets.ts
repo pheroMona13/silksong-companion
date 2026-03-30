@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUser, updateFoundFleas } from '../database/db';
+import { getUser, updateFoundMemoryLockets } from '../database/db';
 
 export function useFoundMemoryLockets() {
   const [foundMemoryLockets, setFoundMemoryLockets] = useState<string[]>([]);
@@ -33,7 +33,7 @@ export function useFoundMemoryLockets() {
     }
 
     setFoundMemoryLockets(updated);
-    await updateFoundFleas(updated);
+    await updateFoundMemoryLockets(updated);
   }
 
   return {
