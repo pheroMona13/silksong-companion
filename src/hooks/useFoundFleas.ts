@@ -5,23 +5,31 @@ export function useFoundFleas() {
   const [foundFleas, setFoundFleas] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
+  async function load() {
+    const user = await getUser();
+    return user.found_fleas ?? [];
+  }
+
   useEffect(() => {
-    async function load() {
-      const user = await getUser();
-      setFoundFleas(user.found_fleas ?? []);
+    async function updateData() {
+      const result = await load();
+
+      setFoundFleas(result);
       setLoading(false);
     }
 
-    load();
+    updateData();
   }, []);
 
   async function toggleFlea(id: string) {
     let updated: string[];
 
-    if (foundFleas.includes(id)) {
-      updated = foundFleas.filter((item) => item !== id);
+    const result = await load();
+
+    if (result.includes(id)) {
+      updated = result.filter((item) => item !== id);
     } else {
-      updated = [...foundFleas, id];
+      updated = [...result, id];
     }
 
     setFoundFleas(updated);

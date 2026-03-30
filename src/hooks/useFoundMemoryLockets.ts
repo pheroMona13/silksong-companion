@@ -5,23 +5,31 @@ export function useFoundMemoryLockets() {
   const [foundMemoryLockets, setFoundMemoryLockets] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
+  async function load() {
+    const user = await getUser();
+    return user.found_memory_lockets ?? [];
+  }
+
   useEffect(() => {
-    async function load() {
-      const user = await getUser();
-      setFoundMemoryLockets(user.found_fleas ?? []);
+    async function updateData() {
+      const result = await load();
+
+      setFoundMemoryLockets(result);
       setLoading(false);
     }
 
-    load();
+    updateData();
   }, []);
 
   async function toggleMemoryLocket(id: string) {
     let updated: string[];
 
-    if (foundMemoryLockets.includes(id)) {
-      updated = foundMemoryLockets.filter((item) => item !== id);
+    const result = await load();
+
+    if (result.includes(id)) {
+      updated = result.filter((item) => item !== id);
     } else {
-      updated = [...foundMemoryLockets, id];
+      updated = [...result, id];
     }
 
     setFoundMemoryLockets(updated);

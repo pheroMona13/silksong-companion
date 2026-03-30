@@ -5,23 +5,31 @@ export function useFoundCollectibles() {
   const [foundCollectibles, setFoundCollectibles] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
+  async function load() {
+    const user = await getUser();
+    return user.found_collectibles ?? [];
+  }
+
   useEffect(() => {
-    async function load() {
-      const user = await getUser();
-      setFoundCollectibles(user.found_collectibles ?? []);
+    async function updateData() {
+      const result = await load();
+
+      setFoundCollectibles(result);
       setLoading(false);
     }
 
-    load();
+    updateData();
   }, []);
 
   async function toggleItem(id: string) {
     let updated: string[];
 
-    if (foundCollectibles.includes(id)) {
-      updated = foundCollectibles.filter((item) => item !== id);
+    const result = await load();
+
+    if (result.includes(id)) {
+      updated = result.filter((item) => item !== id);
     } else {
-      updated = [...foundCollectibles, id];
+      updated = [...result, id];
     }
 
     setFoundCollectibles(updated);

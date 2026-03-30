@@ -5,23 +5,31 @@ export function useCheckedItems() {
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
+  async function load() {
+    const user = await getUser();
+    return user.checked_items ?? [];
+  }
+
   useEffect(() => {
-    async function load() {
-      const user = await getUser();
-      setCheckedItems(user.checked_items ?? []);
+    async function updateData() {
+      const result = await load();
+
+      setCheckedItems(result);
       setLoading(false);
     }
 
-    load();
+    updateData();
   }, []);
 
   async function toggleItem(id: string) {
     let updated: string[];
 
-    if (checkedItems.includes(id)) {
-      updated = checkedItems.filter((item) => item !== id);
+    const result = await load();
+
+    if (result.includes(id)) {
+      updated = result.filter((item) => item !== id);
     } else {
-      updated = [...checkedItems, id];
+      updated = [...result, id];
     }
 
     setCheckedItems(updated);
