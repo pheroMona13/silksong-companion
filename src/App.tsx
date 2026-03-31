@@ -7,6 +7,7 @@ import HundredChecklistPage from './pages/hundred-checklist/HundredChecklistPage
 import FleaPage from './pages/flea/FleaPage.tsx';
 import CollectiblesPage from './pages/collectible/CollectiblesPage.tsx';
 import MemoryLocketPage from './pages/memory-locket/MemoryLocketPage.tsx';
+import OptionsPage from './pages/options/OptionsPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: '/silksong-companion/memory-lockets',
         Component: MemoryLocketPage,
+      },
+      {
+        path: '/silksong-companion/options',
+        Component: OptionsPage,
       },
     ],
   },

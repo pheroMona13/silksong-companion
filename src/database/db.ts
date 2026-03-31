@@ -30,6 +30,33 @@ function openDB(): Promise<IDBDatabase> {
   });
 }
 
+export async function resetAllChecked(): Promise<void> {
+  const db = await openDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+
+    const request = store.get('current');
+
+    request.onsuccess = () => {
+      const requestPut = store.put({
+        id: 'current',
+        defeated_bosses: [],
+        checked_items: [],
+        found_fleas: [],
+        found_collectibles: [],
+        found_memory_lockets: [],
+      });
+
+      requestPut.onsuccess = () => resolve();
+      requestPut.onerror = () => reject(request.error);
+    };
+
+    request.onerror = () => reject(request.error);
+  });
+}
+
 export async function getUser(): Promise<UserData> {
   const db = await openDB();
 

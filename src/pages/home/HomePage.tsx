@@ -19,6 +19,9 @@ function HomePage() {
       <Link to="/silksong-companion/memory-lockets" className="card">
         List of Memory Lockets
       </Link>
+      <Link to="/silksong-companion/options" className="card">
+        Options
+      </Link>
     </div>
   );
 }
