@@ -8,6 +8,7 @@ import FleaPage from './pages/flea/FleaPage.tsx';
 import CollectiblesPage from './pages/collectible/CollectiblesPage.tsx';
 import MemoryLocketPage from './pages/memory-locket/MemoryLocketPage.tsx';
 import OptionsPage from './pages/options/OptionsPage.tsx';
+import SavePage from './pages/save/SavePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: '/silksong-companion/options',
         Component: OptionsPage,
+      },
+      {
+        path: '/silksong-companion/save',
+        Component: SavePage,
       },
     ],
   },
