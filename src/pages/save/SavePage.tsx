@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getUser, type UserData } from '../../database/db';
+import { getUser, loadSave, type UserData } from '../../database/db';
+import SaveSVG from '../../assets/images/icons/save.svg';
 import './SavePage.scss';
 
 export type SaveType = {
@@ -13,8 +14,11 @@ function SavePage() {
 
   const handleCreate = async () => {
     const description = prompt('Enter description (optional)') ?? undefined;
-    const id = new Date().getTime();
+    if (!description) {
+      return;
+    }
 
+    const id = new Date().getTime();
     const currentData = await getUser();
 
     const newList = [
@@ -30,6 +34,27 @@ function SavePage() {
     setSaves((prev) => {
       return [...prev, { id, description }];
     });
+  };
+  const handleLoad = async (saveId: string | number) => {
+    if (confirm('Are you sure you want to restore (load) this save file?')) {
+      if (
+        confirm(
+          'Restoring this save file will "Overwrite" the current save, are you sure?',
+        )
+      ) {
+        const saves = JSON.parse(
+          localStorage.getItem('save_list') ?? '[]',
+        ) as SaveType[];
+
+        const targetSave = saves.find((e) => {
+          return e.id === saveId;
+        });
+
+        await loadSave(targetSave);
+
+        alert('Save file has been loaded successfully!');
+      }
+    }
   };
 
   useEffect(() => {
@@ -57,11 +82,18 @@ function SavePage() {
         <>
           {saves.map((e) => {
             return (
-              <div className="card save" key={e.id}>
+              <div
+                key={e.id}
+                className="card save"
+                onClick={() => {
+                  handleLoad(e.id);
+                }}
+              >
                 <p>
                   {new Date(parseInt(String(e.id))).toLocaleString('en-US')}
                 </p>
                 <p className="description">{e.description}</p>
+                <img src={SaveSVG} alt="load" />
               </div>
             );
           })}

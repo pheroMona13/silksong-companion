@@ -1,5 +1,7 @@
 // src/lib/db.ts
 
+import type { SaveType } from '../pages/save/SavePage';
+
 const DB_NAME = 'silksong-companion-db';
 const DB_VERSION = 1;
 const STORE_NAME = 'user';
@@ -85,6 +87,35 @@ export async function getUser(): Promise<UserData> {
 
         resolve(defaultUser);
       }
+    };
+
+    request.onerror = () => reject(request.error);
+  });
+}
+
+export async function loadSave(save?: SaveType): Promise<void> {
+  const db = await openDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+
+    const request = store.get('current');
+
+    request.onsuccess = () => {
+      const requestPut = store.put(
+        save?.data ?? {
+          id: 'current',
+          defeated_bosses: [],
+          checked_items: [],
+          found_fleas: [],
+          found_collectibles: [],
+          found_memory_lockets: [],
+        },
+      );
+
+      requestPut.onsuccess = () => resolve();
+      requestPut.onerror = () => reject(request.error);
     };
 
     request.onerror = () => reject(request.error);
