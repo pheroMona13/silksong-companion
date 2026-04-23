@@ -52,7 +52,7 @@ function MemoryLocketPage() {
           </>
         ) : (
           <>
-            [{foundMemoryLockets.length}/{fleas.length}]
+            [{foundMemoryLockets.length}/{memoryLockets.length}]
             <img src={CheckBoxSVG} alt="checked count" />
           </>
         )}
